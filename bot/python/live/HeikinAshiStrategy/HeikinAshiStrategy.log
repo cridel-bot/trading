@@ -120,3 +120,65 @@ Condition Long : False
 Condition Short : False
 Pas d'actions a entreprendre
 ------------- End Heikin Ashin strategy at 2025-02-09 17:00:10.436684 
+------------- Start Heikin Ashin strategy at 2025-02-09 17:15:07.963082 
+Solde du compte : 88.943683309079 USDT
+Traitement du token ETH/USDT pour la Timeframe 15m
+Heure : 2025-02-09 17:15:00
+Heure : 2024-08-09 17:15:00
+Fetch OHLCV pour ETH/USDT:USDT-15m
+Date de la première bougie : 2025-01-30 07:30:00 - Open : 3185.61 - Close : 3180.54
+Date de la dernière bougie : 2025-02-09 17:15:00 - Open : 2655.32 - Close : 2653.75
+Trades sauvegardés dans /home/cridel/projects/trading/bot/python/live/HeikinAshiStrategy/dataframe/ETH_USDT_15m_20250209_171510.csv
+Ordre long déja actif pour la paire ETH/USDT : True
+Ordre short déja actif pour la paire ETH/USDT : False
+Condition Long : False
+Condition Short : False
+Pas d'actions a entreprendre
+------------- End Heikin Ashin strategy at 2025-02-09 17:15:10.998428 
+------------- Start Heikin Ashin strategy at 2025-02-09 17:30:07.446194 
+Solde du compte : 88.835683309079 USDT
+Traitement du token ETH/USDT pour la Timeframe 15m
+Heure : 2025-02-09 17:30:00
+Heure : 2024-08-09 17:30:00
+Fetch OHLCV pour ETH/USDT:USDT-15m
+Date de la première bougie : 2025-01-30 07:45:00 - Open : 3180.54 - Close : 3189.49
+Date de la dernière bougie : 2025-02-09 17:30:00 - Open : 2649.55 - Close : 2649.18
+Trades sauvegardés dans /home/cridel/projects/trading/bot/python/live/HeikinAshiStrategy/dataframe/ETH_USDT_15m_20250209_173010.csv
+Ordre long déja actif pour la paire ETH/USDT : True
+Ordre short déja actif pour la paire ETH/USDT : False
+Condition Long : False
+Condition Short : False
+Pas d'actions a entreprendre
+------------- End Heikin Ashin strategy at 2025-02-09 17:30:10.490059 
+------------- Start Heikin Ashin strategy at 2025-02-09 17:45:07.922539 
+Solde du compte : 88.652883309079 USDT
+Traitement du token ETH/USDT pour la Timeframe 15m
+Heure : 2025-02-09 17:45:00
+Heure : 2024-08-09 17:45:00
+Fetch OHLCV pour ETH/USDT:USDT-15m
+Date de la première bougie : 2025-01-30 08:00:00 - Open : 3189.49 - Close : 3181.38
+Date de la dernière bougie : 2025-02-09 17:45:00 - Open : 2639.87 - Close : 2639.93
+Trades sauvegardés dans /home/cridel/projects/trading/bot/python/live/HeikinAshiStrategy/dataframe/ETH_USDT_15m_20250209_174510.csv
+Ordre long déja actif pour la paire ETH/USDT : True
+Ordre short déja actif pour la paire ETH/USDT : False
+Condition Long : False
+Condition Short : False
+Pas d'actions a entreprendre
+------------- End Heikin Ashin strategy at 2025-02-09 17:45:11.162891 
+------------- Start Heikin Ashin strategy at 2025-02-09 18:00:07.689581 
+Solde du compte : 88.639283309079 USDT
+Traitement du token ETH/USDT pour la Timeframe 15m
+Heure : 2025-02-09 18:00:00
+Heure : 2024-08-09 18:00:00
+Fetch OHLCV pour ETH/USDT:USDT-15m
+Date de la première bougie : 2025-01-30 08:15:00 - Open : 3181.38 - Close : 3190.99
+Date de la dernière bougie : 2025-02-09 18:00:00 - Open : 2641.02 - Close : 2638.08
+Trades sauvegardés dans /home/cridel/projects/trading/bot/python/live/HeikinAshiStrategy/dataframe/ETH_USDT_15m_20250209_180010.csv
+Ordre long déja actif pour la paire ETH/USDT : True
+Ordre short déja actif pour la paire ETH/USDT : False
+Condition Long : False
+Condition Short : True
+Fermeture des positions pour ETH/USDT
+Position long fermée pour ETH/USDT:USDT - long - 0.02 - 2652.95
+Ouverture d'une position short pour ETH/USDT/15m - Taille de la position : 70.91142664726321$ (0.026865375258007435 ETH/USDT)
+------------- End Heikin Ashin strategy at 2025-02-09 18:00:13.564716 

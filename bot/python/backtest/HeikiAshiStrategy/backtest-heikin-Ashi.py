@@ -71,7 +71,7 @@ def backtest_strategy(data, initial_balance, risk, leverage,ema_fast,ema_slow):
         goshort = (df['EMA_Fast'].iloc[i] < df['EMA_Slow'].iloc[i]) and (df['MACD_Line'].iloc[i] < df['Signal_Line'].iloc[i])
 
         if position == "long" and goshort:
-            exit_price = df['HA_Close'].iloc[i]
+            exit_price = df['close'].iloc[i]
             position_size_usd = position_size
             position_size_asset = position_size / entry_price
             profit_loss = position_size * (exit_price / entry_price - 1)
@@ -85,7 +85,7 @@ def backtest_strategy(data, initial_balance, risk, leverage,ema_fast,ema_slow):
             })
             position = None
         elif position == "short" and golong:
-            exit_price = df['HA_Close'].iloc[i]
+            exit_price = df['close'].iloc[i]
             position_size_usd = position_size
             position_size_asset = position_size / entry_price
             profit_loss = position_size * (1 - exit_price / entry_price)
@@ -188,7 +188,7 @@ def summarize_monthly_backtest(trade_log):
     return monthly_df
 
 initial_balance = 96  # Solde initial
-display_trades = False
+display_trades = True
 start_date_param = "2022-01-01"  # Exemple de date de début, à remplacer par le paramètre réel
 
 for crypto in cryptos:
