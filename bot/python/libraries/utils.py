@@ -41,3 +41,7 @@ class Utils:
             df['datetime'] = pd.to_datetime(df['timestamp'], unit='ms')
             filtered_df = df[df['datetime'] >= pd.to_datetime(start_date)]
             return filtered_df
+        
+        def add_readble_date_to_dataframe(self,df, date_column_name):
+              df['readable_date'] = pd.to_datetime(df[date_column_name], unit='ms')
+              return df

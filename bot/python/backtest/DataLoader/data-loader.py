@@ -10,7 +10,7 @@ sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')
 from libraries.DataManager import ExchangeDataManager
 
 exchange_name = "bitget"
-intervals = ["15m","30m","1h", "2h", "4h"]
+intervals = ["5m","15m","30m","1h", "2h", "4h"]
 coin_to_dl = [
     "BTC/USDT:USDT",
     "ETH/USDT:USDT",

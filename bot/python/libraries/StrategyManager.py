@@ -16,7 +16,11 @@ class StrategyManager:
         def __init__(self, initial_balance) -> None:
                 self.initial_balance = initial_balance
                 self.trade_log = []
+                self.summaries_backtest = []
                 self.utils = Utils("strategy-manager")
+
+        def clear_trade_log(self):
+                self.trade_log = []
 
         # Fonction pour résumer le backtest
         def summarize_backtest(self, start_date, initial_balance):
@@ -85,11 +89,28 @@ class StrategyManager:
                 filtered_df = df[df['datetime'] >= pd.to_datetime(start_date)]
                 return filtered_df.values.tolist()
        
+        def add_summary_backtest_entry(self, backtest_parameters, initial_balance, final_balance, total_trades, winning_trades, losing_trades, win_rate, max_drawdown, max_drawdown_pct):
+                pct_rendement = ((final_balance / initial_balance) - 1 ) * 100
+                self.summaries_backtest.append({
+                        'backtest_parameters' : backtest_parameters,
+                        'initial_balance' : initial_balance,
+                        'final_balance' : final_balance,
+                        'total_trades' : total_trades,
+                        'winninf_trades' : winning_trades,
+                        'losing_trades': losing_trades,
+                        'win_rate' : win_rate,
+                        'max_drawdown' : max_drawdown,
+                        'max_drawdown_pct' : max_drawdown_pct,
+                        'pct_rendement' : pct_rendement
+                })
+
         def display_summary(self, symbol, timeframe, initial_balance, final_balance, summary):
+                pct_rendement = ((final_balance / initial_balance) - 1 ) * 100
                 print(f"\nRésumé du backtest: {symbol}-{timeframe}")
                 print(f"Date de début: {summary['start_date']}")
                 print(f"Blance initiale : {initial_balance} USDT")
                 print(f"Balance finale : {final_balance} USDT")
+                print(f"Rendement : {pct_rendement:.2f}%")
                 print(f"Nombre total de trades: {summary['total_trades']}")
                 print(f"Nombre de trades gagnants: {summary['winning_trades']}")
                 print(f"Nombre de trades perdants: {summary['losing_trades']}")
@@ -142,16 +163,18 @@ class StrategyManager:
                           profit_loss,
                           tp_price=None,
                           sl_price=None):
-            self.trade_log.append({
-                'position': position, 
-                'entry_date': datetime.fromtimestamp(entry_date / 1000).strftime('%Y-%m-%d %H:%M:%S'), 
-                'exit_date': datetime.fromtimestamp(exit_date / 1000).strftime('%Y-%m-%d %H:%M:%S'),
-                'entry': entry_price, 
-                'exit': exit_price, 
-                'size_usd': position_size_usd, 
-                'tp' : tp_price, 
-                'sl' : sl_price,
-                'size_asset': position_size_asset, 
-                'balance': balance, 
-                'profit_loss': profit_loss                
-            })
+            
+                self.trade_log.append({
+                        'position': position, 
+                        'entry_date': datetime.fromtimestamp(entry_date / 1000).strftime('%Y-%m-%d %H:%M:%S'), 
+                        'exit_date': datetime.fromtimestamp(exit_date / 1000).strftime('%Y-%m-%d %H:%M:%S'),
+                        'entry': entry_price, 
+                        'exit': exit_price, 
+                        'size_usd': position_size_usd, 
+                        'tp' : tp_price, 
+                        'sl' : sl_price,
+                        'size_asset': position_size_asset, 
+                        'balance': balance, 
+                        'profit_loss': profit_loss                
+                })
+

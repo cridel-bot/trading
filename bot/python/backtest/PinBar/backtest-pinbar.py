@@ -76,11 +76,15 @@ def backtest_strategy(data,
                         ema_medium,
                         ema_fast,
                         symbol,
-                        timeframe):
+                        timeframe,
+                        short_long,
+                        tp_pct,
+                        sl_pct):
     
 
-    #df = heikin_ashi_strategy(data,ema_fast,sma_slow)
     df = enhanced_dataframe_strategy(data, sma_slow, ema_medium, ema_fast)
+    # Add readable date to the dataframe
+    df = utils.add_readble_date_to_dataframe(df,"timestamp")
     utils.save_trades_to_csv(df, symbol, timeframe, "/home/cridel/projects/trading/bot/python/backtest/PinBar/dataframe/")
 
     balance = initial_balance
@@ -88,16 +92,6 @@ def backtest_strategy(data,
     entry_date = None
     trade_log = []
     start_date = None
-
-    # Paramètres utilisateur
-    usr_risk = 3  # pourcentage de risque de l'équité
-    atr_mult = 0.5  # Stop Loss x ATR
-    slPoints = 1  # Stop Loss Trail Points (Pips)
-    slOffset = 1  # Stop Loss Trail Offset (Pips)
-    sma_slow = 50  # Période SMA lente
-    ema_medm = 18  # Période EMA moyenne
-    ema_fast = 6  # Période EMA rapide
-    atr_valu = 14  # Période ATR    
 
     for i in range(len(df)):
         if i == 0:
@@ -112,8 +106,8 @@ def backtest_strategy(data,
             high_price = df['high'].iloc[i]
             low_price = df['low'].iloc[i]
 
-            tp_price = entry_price * (1 + (0.02 * 2))
-            sl_price = entry_price * (1 - 0.05)
+            tp_price = entry_price * (1 + tp_pct)
+            sl_price = entry_price * (1 - sl_pct)
             
             if goshort or high_price >= tp_price or low_price <= sl_price:
 
@@ -141,8 +135,8 @@ def backtest_strategy(data,
         
         elif position == "short":
             exit_price = df['close'].iloc[i]
-            tp_price = entry_price * (1 - 1.5 * (risk / 100))
-            sl_price = entry_price * (1 + (risk / 100))
+            tp_price = entry_price * (1 - tp_pct)
+            sl_price = entry_price * (1 + sl_pct)
             
             if golong or exit_price <= tp_price or exit_price >= sl_price:
                 position_size_usd = position_size
@@ -164,14 +158,14 @@ def backtest_strategy(data,
         
         if position is None:
             position_size = balance * (risk / 100) * leverage
-            if golong:
+            if golong and (short_long == 'both' or short_long == 'long'):
                 position = "long"
                 entry_date = df['timestamp'].iloc[i]
-                entry_price = df['close'].iloc[i]
-            elif goshort:
+                entry_price = df['open'].iloc[i]
+            elif goshort and (short_long == 'both' or short_long == 'short'):
                 position = "short"
                 entry_date = df['timestamp'].iloc[i]
-                entry_price = df['close'].iloc[i]    
+                entry_price = df['open'].iloc[i]    
     
     return balance, trade_log, start_date
 
@@ -179,9 +173,11 @@ utils = Utils("backtest-pinbar")
 strategy = StrategyManager("backtest-pinbar")
 trading = TradingUtils("backtest-pinbar")
 
-initial_balance = 96  # Solde initial
+initial_balance = 1500  # Solde initial
 save_trades = True
-start_date_param = "2025-02-01"  # Exemple de date de début, à remplacer par le paramètre réel
+display_best_worst_trade = False
+display_summaries = False
+start_date_param = "2024-01-01"  # Exemple de date de début, à remplacer par le paramètre réel
 
 for crypto in cryptos:
     symbol = crypto['symbol']
@@ -192,6 +188,11 @@ for crypto in cryptos:
     sma_slow = crypto["sma_slow"]
     ema_medium = crypto["ema_medium"]
     ema_fast = crypto["ema_fast"]
+
+    short_long = crypto["short_long"]
+
+    tp_pct = crypto["tp_pct"]
+    sl_pct = crypto["sl_pct"]
     
     print(f"Traitement du token {symbol} pour la Timeframe {timeframe}")
 
@@ -202,6 +203,7 @@ for crypto in cryptos:
     if start_date_param:
         data = utils.filter_data_from_date(data, start_date_param)
 
+
     final_balance, trade_log, start_date = backtest_strategy(data, 
                                                              initial_balance, 
                                                              risk, leverage,
@@ -209,7 +211,10 @@ for crypto in cryptos:
                                                              ema_medium,
                                                              ema_fast,
                                                              symbol,
-                                                             timeframe)
+                                                             timeframe,
+                                                             short_long,
+                                                             tp_pct,
+                                                             sl_pct)
     
     if(save_trades):
         strategy.save_trades(symbol, timeframe, "/home/cridel/projects/trading/bot/python/backtest/PinBar/trades/")
@@ -217,7 +222,11 @@ for crypto in cryptos:
     summary = strategy.summarize_backtest(start_date, initial_balance)
     monthly_summary = strategy.summarize_monthly_backtest()
 
-    strategy.display_summary(symbol, timeframe, initial_balance, final_balance, summary)
-    strategy.display_best_trade(summary)
-    strategy.display_worst_trade(summary)
-    strategy.display_monthly_summary(monthly_summary)
+    if(display_summaries):
+        strategy.display_summary(symbol, timeframe, initial_balance, final_balance, summary)
+        strategy.display_monthly_summary(monthly_summary)
+
+    if(display_best_worst_trade):
+        strategy.display_best_trade(summary)
+        strategy.display_worst_trade(summary)
+    
