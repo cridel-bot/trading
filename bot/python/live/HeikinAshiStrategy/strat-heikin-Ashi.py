@@ -9,6 +9,7 @@ from datetime import datetime
 # Ajouter les chemins
 sys.path.append('./')
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 from libraries.perp_bitget import PerpBitget as Exchange
 
 

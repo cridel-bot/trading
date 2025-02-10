@@ -5,6 +5,7 @@ import pandas as pd
 # Ajouter les chemins
 sys.path.append('./')
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from libraries.DataManager import ExchangeDataManager
 

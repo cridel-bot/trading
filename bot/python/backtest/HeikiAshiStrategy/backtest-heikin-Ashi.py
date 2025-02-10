@@ -2,6 +2,7 @@ import os
 import sys
 import json
 import pandas as pd
+import pandas_ta as pdta
 
 from datetime import datetime
 
